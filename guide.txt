@@ -1,0 +1,12 @@
+************************
+GUIDE TO RUN THE PROJECT
+************************
+
+Run these two commands on this order:
+
+* Note: The first two command only needs to be run the very first time
+        the rest of the time you can run only the start one and it should be fine
+
+- npm install 
+- npm run build
+- npm run start

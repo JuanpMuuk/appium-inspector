@@ -59,7 +59,6 @@ class JavaFramework extends Framework {
   codeFor_findAndAssign(strategy, locator, localVar, isArray) {
     let suffixMap = {
       xpath: 'xpath',
-      'accessibility id': 'accessibilityId',
       id: 'id',
       'class name': 'className',
       name: 'name',
@@ -73,11 +72,11 @@ class JavaFramework extends Framework {
       return this.handleUnsupportedLocatorStrategy(strategy, locator);
     }
     if (isArray) {
-      return `var ${localVar} = driver.findElements(AppiumBy.${
+      return `var ${localVar} = driver.findElements(By.${
         suffixMap[strategy]
       }(${JSON.stringify(locator)}));`;
     } else {
-      return `var ${localVar} = driver.findElement(AppiumBy.${suffixMap[strategy]}(${JSON.stringify(
+      return `var ${localVar} = driver.findElement(By.${suffixMap[strategy]}(${JSON.stringify(
         locator,
       )}));`;
     }
@@ -91,7 +90,7 @@ class JavaFramework extends Framework {
   }
 
   codeFor_click(varName, varIndex) {
-    return `${this.getVarName(varName, varIndex)}.click();`;
+    return `Actions.clickElement(driver,${this.getVarName(varName, varIndex)});`;
   }
 
   codeFor_clear(varName, varIndex) {
@@ -99,7 +98,7 @@ class JavaFramework extends Framework {
   }
 
   codeFor_sendKeys(varName, varIndex, text) {
-    return `${this.getVarName(varName, varIndex)}.sendKeys(${JSON.stringify(text)});`;
+    return `Actions.sendKeys(driver,${this.getVarName(varName, varIndex)}, ${JSON.stringify(text)});`;
   }
 
   codeFor_tap(varNameIgnore, varIndexIgnore, pointerActions) {

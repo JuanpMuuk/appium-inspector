@@ -20,7 +20,7 @@ const VALID_W3C_CAPS = [
 
 // Attributes on nodes that are likely to be unique to the node so we should consider first when
 // suggesting xpath locators. These are considered IN ORDER.
-const UNIQUE_XPATH_ATTRIBUTES = ['name', 'content-desc', 'id', 'resource-id', 'accessibility-id'];
+const UNIQUE_XPATH_ATTRIBUTES = ['name', 'content-desc', 'id', 'resource-id'];
 
 // Attributes that we should recommend as a fallback but ideally only in conjunction with other
 // attributes
