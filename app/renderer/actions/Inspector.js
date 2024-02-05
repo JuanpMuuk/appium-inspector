@@ -148,10 +148,16 @@ export function selectElement(path) {
 
     // Find the optimal selection strategy. If none found, fall back to XPath.
     const strategyMap = _.toPairs(getLocators(selectedElement.attributes, sourceXML));
-    strategyMap.push(['xpath', selectedElement.xpath]);
+    const index = 0;
+    const newStrategyMap = [
+      ...strategyMap.slice(0, index),
+      ['xpath', selectedElement.xpath],
+      ...strategyMap.slice(index)
+    ];  
+    // strategyMap.unshift(['xpath', selectedElement.xpath]);
 
     // Debounce find element so that if another element is selected shortly after, cancel the previous search
-    await findElement(strategyMap, dispatch, getState, path);
+    await findElement(newStrategyMap, dispatch, getState, path);
   };
 }
 

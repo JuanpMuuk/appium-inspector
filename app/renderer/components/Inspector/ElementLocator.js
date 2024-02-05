@@ -4,7 +4,6 @@ import React from 'react';
 import {ALERT} from '../AntdTypes';
 import InspectorStyles from './Inspector.css';
 
-const STRAT_ID = ['id', 'Id'];
 const STRAT_XPATH = ['xpath', 'XPath'];
 const STRAT_NAME = ['name', 'Name'];
 const STRAT_CLASS_NAME = ['class name', 'Class Name'];
@@ -15,7 +14,7 @@ const STRAT_DATAMATCHER = ['-android datamatcher', 'DataMatcher'];
 const STRAT_VIEWTAG = ['-android viewtag', 'View Tag'];
 
 const locatorStrategies = (automationName) => {
-  let strategies = [STRAT_ID, STRAT_XPATH, STRAT_NAME, STRAT_CLASS_NAME];
+  let strategies = [STRAT_XPATH, STRAT_NAME, STRAT_CLASS_NAME];
   if (!automationName) {
     return strategies;
   }

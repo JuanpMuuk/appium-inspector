@@ -71,14 +71,30 @@ class JavaFramework extends Framework {
     if (!suffixMap[strategy]) {
       return this.handleUnsupportedLocatorStrategy(strategy, locator);
     }
+    /*
+      Here we define if it will be a IOS element or a Android element for the definition on the recorder
+    */
     if (isArray) {
-      return `var ${localVar} = driver.findElements(By.${
-        suffixMap[strategy]
-      }(${JSON.stringify(locator)}));`;
+      if(locator.includes("android")){
+        return `AndroidElement ${localVar} = (AndroidElement) driver.findElements(By.${
+          suffixMap[strategy] 
+        }(${JSON.stringify(locator)}));`;
+      }else{
+        return `IOSElement ${localVar} = (IOSElement) driver.findElements(By.${
+          suffixMap[strategy]
+        }(${JSON.stringify(locator)}));`;
+      }
     } else {
-      return `var ${localVar} = driver.findElement(By.${suffixMap[strategy]}(${JSON.stringify(
-        locator,
-      )}));`;
+      if(locator.includes("android")){
+        return `AndroidElement ${localVar} = (AndroidElement) driver.findElement(By.${suffixMap[strategy]}(${JSON.stringify(
+          locator,
+        )}));`;
+      }else {
+        return `IOSElement ${localVar} = (IOSElement) driver.findElement(By.${suffixMap[strategy]}(${JSON.stringify(
+          locator,
+        )}));`;
+      }
+
     }
   }
 
@@ -92,7 +108,7 @@ class JavaFramework extends Framework {
   codeFor_click(varName, varIndex) {
     return `Actions.clickElement(driver,${this.getVarName(varName, varIndex)});`;
   }
-
+  //TODO adapt return for our code
   codeFor_clear(varName, varIndex) {
     return `${this.getVarName(varName, varIndex)}.clear();`;
   }
@@ -101,6 +117,7 @@ class JavaFramework extends Framework {
     return `Actions.sendKeys(driver,${this.getVarName(varName, varIndex)}, ${JSON.stringify(text)});`;
   }
 
+  //TODO adapt return for our code
   codeFor_tap(varNameIgnore, varIndexIgnore, pointerActions) {
     const {x, y} = this.getTapCoordinatesFromPointerActions(pointerActions);
     return `
@@ -115,7 +132,7 @@ tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 driver.perform(Arrays.asList(tap));
     `;
   }
-
+  //TODO adapt return for our code
   codeFor_swipe(varNameIgnore, varIndexIgnore, pointerActions) {
     const {x1, y1, x2, y2} = this.getSwipeCoordinatesFromPointerActions(pointerActions);
     return `
