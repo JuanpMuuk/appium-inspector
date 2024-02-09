@@ -116,21 +116,10 @@ class JavaFramework extends Framework {
   codeFor_sendKeys(varName, varIndex, text) {
     return `Actions.sendKeys(driver,${this.getVarName(varName, varIndex)}, ${JSON.stringify(text)});`;
   }
-
-  //TODO adapt return for our code
+  
   codeFor_tap(varNameIgnore, varIndexIgnore, pointerActions) {
     const {x, y} = this.getTapCoordinatesFromPointerActions(pointerActions);
-    return `
-final var finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
-var tapPoint = new Point(${x}, ${y});
-var tap = new Sequence(finger, 1);
-tap.addAction(finger.createPointerMove(Duration.ofMillis(0),
-    PointerInput.Origin.viewport(), tapPoint.x, tapPoint.y));
-tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-tap.addAction(new Pause(finger, Duration.ofMillis(50)));
-tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-driver.perform(Arrays.asList(tap));
-    `;
+    return `Actions.clickOnCoordinates(driver,${x}, ${y});`;
   }
   //TODO adapt return for our code
   codeFor_swipe(varNameIgnore, varIndexIgnore, pointerActions) {
